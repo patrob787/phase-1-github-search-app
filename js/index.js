@@ -22,10 +22,20 @@ function handleUsers(users) {
     ulUser.innerHTML = "";
     users.forEach((user) => {
         let li = document.createElement('li');
-       
-        li.textContent = `User Name: ${user.login}, Avatar: ${user.avatar_url}, Profile: ${user.html_url}`;
+        li.classList.add('user-list');
+        li.textContent = `USER NAME: ${user.login}, AVATAR: ${user.avatar_url}, PROFILE: ${user.html_url}`;
 
         li.addEventListener('click', (e) => {
+            let lines = ulUser.querySelectorAll('li');
+            
+            lines.forEach((li) => {
+            li.style.backgroundColor = "white";
+            li.style.color = "black";
+        })
+            
+            console.log(e.target)
+            li.style.backgroundColor = "black";
+            li.style.color = "white";
 
             fetch(`https://api.github.com/users/${user.login}/repos`)
             .then(resp => resp.json())
@@ -37,6 +47,7 @@ function handleUsers(users) {
 }
 
 function handleRepos(repoArray){
+    ulRepo.innerHTML = "";
     repoArray.forEach((repo) => {
         let li = document.createElement('li');
         li.textContent = repo.name;
